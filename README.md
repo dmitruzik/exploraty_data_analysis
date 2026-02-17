@@ -1,5 +1,7 @@
 Exploraty Data Analysis
 
+Shared link to project: https://colab.research.google.com/drive/1AtdHRuVJXoynP5J3wtb8rsIDrJeOPqPk?usp=sharing#scrollTo=-TCfZY8u7hEj
+
 Project Overview
 
 This project performs Exploratory Data Analysis (EDA) on the dataset related to sales and logistics using Python.
