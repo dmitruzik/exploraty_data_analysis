@@ -1,0 +1,41 @@
+# BUSINESS METRICS
+
+df["revenue"] = df["units_sold"] * df["unit_price"]
+df["total_cost"] = df["units_sold"] * df["unit_cost"]
+df["profit"] = df["revenue"] - df["total_cost"]
+df["margin_pct"] = df["profit"] / df["revenue"] * 100
+
+# Key Company Metrics
+
+total_orders = df["order_id"].nunique()
+total_revenue = df["revenue"].sum()
+total_profit = df["profit"].sum()
+countries_count = df["country"].nunique()
+avg_margin = df["margin_pct"].mean()
+
+print("Total orders:", total_orders)
+print("Total revenue:", round(total_revenue,2))
+print("Total profit:", round(total_profit,2))
+print("Countries covered:", countries_count)
+print("Average margin %:", round(avg_margin,2))
+
+# Extra Metrics
+
+print("Avg order revenue:", df["revenue"].mean())
+print("Avg units per order:", df["units_sold"].mean())
+
+# ---- OUTPUT ------
+
+Total orders: 1328
+Total revenue: 1702129408.21
+Total profit: 501434459.0
+Countries covered: 45
+Average margin %: 34.1
+Avg order revenue: 1281723.9519653614
+Avg units per order: 4952.201807228916
+
+Business Conclusions — KPI Overview
+• The company operates across many countries, indicating strong geographic reach.
+• Total profit margin is positive, meaning pricing structure is sustainable.
+• Average margin shows stable profitability across transactions.
+• Order volume indicates diversified revenue sources rather than dependence on a few deals.

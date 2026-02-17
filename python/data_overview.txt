@@ -1,0 +1,224 @@
+from google.colab import drive
+drive.mount("/content/drive", force_remount=True)
+
+base_path = "/path_to_file"
+import pandas as pd
+
+df_products = pd.read_csv(f"{base_path}/products.csv")
+df_events = pd.read_csv(f"{base_path}/events.csv")
+df_countries = pd.read_csv(f"{base_path}/countries.csv")
+
+# 1. DATA OVERVIEW
+
+# 1. Number of rows and columns
+print("Countries shape:", df_countries.shape)
+print("Events shape:", df_events.shape)
+print("Products shape:", df_products.shape)
+
+# 2. Column names
+print("\nCountries columns:", df_countries.columns.tolist())
+print("Events columns:", df_events.columns.tolist())
+print("Products columns:", df_products.columns.tolist())
+
+# 3. Basic info
+print("\nCountries info:")
+print(df_countries.info())
+print("\nEvents info:")
+print(df_events.info())
+print("\nProducts info:")
+print(df_products.info())
+
+# 4. First rows
+print("\nCountries:\n", df_countries.head())
+print("\nEvents:\n", df_events.head())
+print("\nProducts:\n", df_products.head())
+
+# 5. Missing values
+print("\nMissing values:")
+print("Countries:\n", df_countries.isnull().sum())
+print("Events:\n", df_events.isnull().sum())
+print("Products:\n", df_products.isnull().sum())
+
+# 6. Statistics
+print("\nEvents stats:\n", df_events.describe())
+
+
+# --------------- OUTCOMES ---------------------------------------------------------------
+
+Mounted at /content/drive
+Countries shape: (248, 5)
+Events shape: (1330, 10)
+Products shape: (12, 2)
+
+Countries columns: ['name', 'alpha-2', 'alpha-3', 'region', 'sub-region']
+Events columns: ['Order ID', 'Order Date', 'Ship Date', 'Order Priority', 'Country Code', 'Product ID', 'Sales Channel', 'Units Sold', 'Unit Price', 'Unit Cost']
+Products columns: ['id', 'item_type']
+
+Countries info:
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 248 entries, 0 to 247
+Data columns (total 5 columns):
+ #   Column      Non-Null Count  Dtype 
+---  ------      --------------  ----- 
+ 0   name        248 non-null    object
+ 1   alpha-2     248 non-null    object
+ 2   alpha-3     248 non-null    object
+ 3   region      247 non-null    object
+ 4   sub-region  247 non-null    object
+dtypes: object(5)
+memory usage: 9.8+ KB
+None
+
+Events info:
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 1330 entries, 0 to 1329
+Data columns (total 10 columns):
+ #   Column          Non-Null Count  Dtype  
+---  ------          --------------  -----  
+ 0   Order ID        1330 non-null   int64  
+ 1   Order Date      1330 non-null   object 
+ 2   Ship Date       1330 non-null   object 
+ 3   Order Priority  1330 non-null   object 
+ 4   Country Code    1248 non-null   object 
+ 5   Product ID      1330 non-null   int64  
+ 6   Sales Channel   1330 non-null   object 
+ 7   Units Sold      1328 non-null   float64
+ 8   Unit Price      1330 non-null   float64
+ 9   Unit Cost       1330 non-null   float64
+dtypes: float64(3), int64(2), object(5)
+memory usage: 104.0+ KB
+None
+
+Products info:
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 12 entries, 0 to 11
+Data columns (total 2 columns):
+ #   Column     Non-Null Count  Dtype 
+---  ------     --------------  ----- 
+ 0   id         12 non-null     int64 
+ 1   item_type  12 non-null     object
+dtypes: int64(1), object(1)
+memory usage: 324.0+ bytes
+None
+
+Countries:
+              name alpha-2 alpha-3   region       sub-region
+0     Afghanistan      AF     AFG     Asia    Southern Asia
+1   Åland Islands      AX     ALA   Europe  Northern Europe
+2         Albania      AL     ALB   Europe  Southern Europe
+3         Algeria      DZ     DZA   Africa  Northern Africa
+4  American Samoa      AS     ASM  Oceania        Polynesia
+
+Events:
+     Order ID Order Date   Ship Date Order Priority Country Code  Product ID  \
+0  100640618  10/8/2014  10/18/2014              M          NOR        2103   
+1  100983083  8/11/2016   8/11/2016              C          SRB        2103   
+2  101025998  7/18/2014   8/11/2014              M          NaN        7940   
+3  102230632  5/13/2017   6/13/2017              L          MNE        2455   
+4  103435266  8/11/2012   9/18/2012              H          SRB        1270   
+
+  Sales Channel  Units Sold  Unit Price  Unit Cost  
+0        Online       650.0      205.70     117.11  
+1       Offline      1993.0      205.70     117.11  
+2        Online      4693.0      668.27     502.54  
+3        Online      1171.0      109.28      35.84  
+4       Offline      7648.0       47.45      31.79  
+
+Products:
+      id        item_type
+0  2103           Cereal
+1  7940        Household
+2  2455          Clothes
+3  1270        Beverages
+4  8681  Office Supplies
+
+Missing values:
+Countries:
+ name          0
+alpha-2       0
+alpha-3       0
+region        1
+sub-region    1
+dtype: int64
+Events:
+ Order ID           0
+Order Date         0
+Ship Date          0
+Order Priority     0
+Country Code      82
+Product ID         0
+Sales Channel      0
+Units Sold         2
+Unit Price         0
+Unit Cost          0
+dtype: int64
+Products:
+ id           0
+item_type    0
+dtype: int64
+
+Events stats:
+            Order ID   Product ID   Units Sold   Unit Price    Unit Cost
+count  1.330000e+03  1330.000000  1328.000000  1330.000000  1330.000000
+mean   5.412048e+08  5788.096241  4952.201807   264.893541   187.246812
+std    2.573882e+08  2820.728878  2905.198996   217.323460   176.158873
+min    1.006406e+08  1270.000000     2.000000     9.330000     6.920000
+25%    3.190004e+08  3127.000000  2356.750000    81.730000    35.840000
+50%    5.387164e+08  5988.000000  4962.000000   154.060000    97.440000
+75%    7.544628e+08  8681.000000  7459.500000   437.200000   263.330000
+max    9.998797e+08  8969.000000  9999.000000   668.270000   524.960000
+
+
+#  ----------------  CONCLUSIONS ----------------------------------------------------------
+
+Conclusions:
+
+Missing values:
+
+Countries: Problem. region 1 null sub-region 1 null
+
+df_countries.isnull().mean() * 100
+
+Expected <0.4% missing values. This is a country without official region (Antarctika).
+
+Solution: Do not remove. Leave and replace with "Unknown".
+
+EVENTS
+
+Missing: Country Code 82 Units Sold 2
+
+df_events.isnull().mean() * 100 Country Code ≈ 6.2% Units Sold ≈ 0.15% Country Code (82 spaces)
+
+This is critical because:
+
+we will not be able to add countries affects regional analytics
+
+Possible reasons: input error, data loss during export, Order ID exists, but country is not recorded
+
+Options:
+
+Delete rows, Mark as "Unknown"
+
+Since 6% is not very small, but not a disaster → it is better not to lose sales data. Units Sold (2 spaces)
+
+This is a numeric variable, affects revenue.
+
+2 entries out of 1330 is too few.
+
+Solution: delete these 2 rows
+
+2.2 Data Types Check
+
+Problem: Dates have type object Order Date → object Ship Date → object
+
+Transform: df_events["Order Date"] = pd.to_datetime(df_events["Order Date"], errors="coerce") df_events["Ship Date"] = pd.to_datetime(df_events["Ship Date"], errors="coerce")
+
+Units Sold Now float64 It has to be int.
+
+df_events["Units Sold"] = df_events["Units Sold"].astype(int)
+
+Potential duplicates due to spaces
+
+Especially in: item_type country name Sales Channel
+
+Need to clean text and check registr

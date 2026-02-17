@@ -1,0 +1,169 @@
+# --------------   DATA CLEANING ---------------------------------------------------
+
+import pandas as pd
+
+# ---------------------------
+# CREATE COPIES
+# ---------------------------
+countries = df_countries.copy()
+events = df_events.copy()
+products = df_products.copy()
+
+# ===========================
+# 1. CLEAN COUNTRIES
+# ===========================
+
+# Fill missing region values
+countries["region"] = countries["region"].fillna("Unknown")
+countries["sub-region"] = countries["sub-region"].fillna("Unknown")
+
+# Strip whitespace
+for col in countries.select_dtypes(include="object").columns:
+    countries[col] = countries[col].str.strip()
+
+# Remove duplicates
+countries = countries.drop_duplicates()
+
+# ===========================
+# 2. CLEAN PRODUCTS
+# ===========================
+
+# Strip whitespace
+for col in products.select_dtypes(include="object").columns:
+    products[col] = products[col].str.strip()
+
+# Normalize text
+products["item_type"] = products["item_type"].str.title()
+
+# Remove duplicates
+products = products.drop_duplicates()
+
+# ===========================
+# 3. CLEAN EVENTS
+# ===========================
+
+# ---- Handle Missing Values ----
+
+# Fill missing Country Code
+events["Country Code"] = events["Country Code"].fillna("Unknown")
+
+# Drop rows where Units Sold is missing
+events = events.dropna(subset=["Units Sold"])
+
+# ---- Fix Data Types ----
+
+# Convert dates
+events["Order Date"] = pd.to_datetime(events["Order Date"], errors="coerce")
+events["Ship Date"] = pd.to_datetime(events["Ship Date"], errors="coerce")
+
+# Convert Units Sold to int
+events["Units Sold"] = events["Units Sold"].astype(int)
+
+# ---- Clean text columns ----
+for col in events.select_dtypes(include="object").columns:
+    events[col] = events[col].str.strip()
+
+# Normalize text formatting
+events["Country Code"] = events["Country Code"].str.upper()
+events["Sales Channel"] = events["Sales Channel"].str.title()
+events["Order Priority"] = events["Order Priority"].str.upper()
+
+# ---- Remove duplicates ----
+events = events.drop_duplicates()
+
+# ---- Logical anomaly checks ----
+
+# Remove rows where Ship Date < Order Date
+events = events[events["Ship Date"] >= events["Order Date"]]
+
+# Remove rows where Unit Price < Unit Cost
+events = events[events["Unit Price"] >= events["Unit Cost"]]
+
+# ---- Ensure Product ID integrity ----
+valid_products = set(products["id"])
+events = events[events["Product ID"].isin(valid_products)]
+
+print("Countries shape:", countries.shape)
+print("Events shape:", events.shape)
+print("Products shape:", products.shape)
+
+print("\nMissing values after cleaning:")
+print("Countries:\n", countries.isnull().sum())
+print("Events:\n", events.isnull().sum())
+print("Products:\n", products.isnull().sum())
+
+# --------------- OUTCOMES -----------------------
+
+Countries shape: (248, 5)
+Events shape: (1328, 10)
+Products shape: (12, 2)
+
+Missing values after cleaning:
+Countries:
+ name          0
+alpha-2       0
+alpha-3       0
+region        0
+sub-region    0
+dtype: int64
+Events:
+ Order ID          0
+Order Date        0
+Ship Date         0
+Order Priority    0
+Country Code      0
+Product ID        0
+Sales Channel     0
+Units Sold        0
+Unit Price        0
+Unit Cost         0
+dtype: int64
+Products:
+ id           0
+item_type    0
+dtype: int64
+
+# ------------------   SAVE FILES -------------
+
+clean_path = f"{base_path}/cleaned"
+
+# If folder does not exist
+import os
+os.makedirs(clean_path, exist_ok=True)
+
+countries.to_csv(f"{clean_path}/countries_cleaned.csv", index=False)
+events.to_csv(f"{clean_path}/events_cleaned.csv", index=False)
+products.to_csv(f"{clean_path}/products_cleaned.csv", index=False)
+
+print("✅ Cleaned files saved successfully.")
+
+
+# MERGE DATASETS
+
+
+df_merged = events.merge(
+    products,
+    left_on="Product ID",
+    right_on="id",
+    how="left"
+)
+
+
+df_merged = df_merged.merge(
+    countries,
+    left_on="Country Code",
+    right_on="alpha-3",
+    how="left"
+)
+
+print(df_merged.shape)
+df_merged.head()
+
+
+#save final merged dataset
+
+final_path = "/content/drive/MyDrive/Data_Science_Mate/pandas_mate/final_project/cleaned"
+
+df_merged.to_csv(f"{final_path}/final_analytical_dataset.csv", index=False)
+
+print("✅ Final analytical dataset saved successfully.")
