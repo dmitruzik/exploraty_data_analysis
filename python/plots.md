@@ -10,6 +10,7 @@ plt.title("Sales by Product Category")
 plt.show()
 
 
+<img width="649" height="453" alt="product_category" src="https://github.com/user-attachments/assets/87d8d95b-0091-4af5-af14-c9bcef3c957b" />
 
 
 Business Conclusions — Product Categories
@@ -27,6 +28,7 @@ plt.title("Revenue by Region")
 plt.show()
 
 
+<img width="594" height="453" alt="region" src="https://github.com/user-attachments/assets/1a8691aa-4c23-42a3-8871-8f4b20787d6b" />
 
 
 Business Conclusions — Regions
@@ -45,6 +47,8 @@ plt.title("Top 10 Countries by Revenue")
 plt.xticks(rotation=45)
 plt.show()
 
+<img width="535" height="570" alt="salesByCountry" src="https://github.com/user-attachments/assets/8acd96cc-a7f4-4fde-bc6b-0d8ee033e3dc" />
+
 
 Business Conclusions — Countries
 • A small number of countries drive a large share of revenue.
@@ -60,6 +64,7 @@ channel.plot(kind="bar")
 plt.title("Online vs Offline Performance")
 plt.show()
 
+<img width="534" height="487" alt="sales" src="https://github.com/user-attachments/assets/b157fd8b-7068-44b0-b0f2-f62cb85e1dec" />
 
 
 Business Conclusions — Sales Channels
@@ -77,7 +82,7 @@ df.groupby("product_name")["ship_days"].mean().sort_values().plot(kind="barh")
 plt.title("Avg Shipping Time by Product")
 plt.show()
 
-
+<img width="649" height="435" alt="shipping" src="https://github.com/user-attachments/assets/0dc57c52-d362-4c41-a6b2-82ac4aae01ed" />
 
 Business Conclusions — Delivery Speed
 • Some categories have longer fulfillment times — possible supply chain bottlenecks.
@@ -92,6 +97,7 @@ plt.title("Profit vs Shipping Time")
 plt.show()
 
 
+<img width="576" height="455" alt="profitVsShipping" src="https://github.com/user-attachments/assets/753c040c-4001-4303-8ebd-637cfa9e28c6" />
 
 
 Business Conclusions — Profit vs Delivery Time
@@ -125,6 +131,7 @@ plt.title("Revenue Trend — Top 5 Product Categories")
 plt.ylabel("Revenue")
 plt.show()
 
+<img width="576" height="455" alt="top5Revenue" src="https://github.com/user-attachments/assets/f9698240-fd6e-4a62-9aad-5e90216a28cc" />
 
 
 Business Conclusions — Time Trends
@@ -141,6 +148,9 @@ df["weekday"] = df["order_date"].dt.day_name()
 df.groupby("weekday")["revenue"].sum().plot(kind="bar")
 plt.title("Revenue by Weekday")
 plt.show()
+
+<img width="547" height="521" alt="weekday1" src="https://github.com/user-attachments/assets/0508ef5a-1762-4edc-a4c9-b5717b78df25" />
+
 
 # Product sysonality
 top_products = (
@@ -171,9 +181,12 @@ plt.ylabel("Revenue")
 plt.xticks(rotation=45)
 plt.show()
 
+<img width="576" height="455" alt="top5Revenue" src="https://github.com/user-attachments/assets/030f3089-6ec5-4648-a5a0-7abf8a5703a9" />
 
+<img width="554" height="508" alt="weekday2" src="https://github.com/user-attachments/assets/a5770b5f-fef1-4dc5-8b83-69b8c4a5cd2d" />
 
 Business Conclusions — Weekly Seasonality
 Revenue seasonality differs across top product categories. 
 Some products peak on weekdays, suggesting business demand, while others show stronger weekend performance, indicating consumer-oriented purchasing behavior. 
 This insight can guide promotion timing and inventory planning.
+
